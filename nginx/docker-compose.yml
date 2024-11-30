@@ -1,0 +1,14 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    network_mode: "host"
+    restart: always 
+    volumes:
+      - /home/pi/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /home/pi/nginx/sites-available:/etc/nginx/sites-available
+      - /home/pi/nginx/ssl:/etc/nginx/ssl
+      - /home/pi/nginx/logs:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"

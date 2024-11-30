@@ -1,0 +1,4 @@
+/nginx/logs/
+/nginx/rpi-cam/live/
+/rpi-cam/*.jpg
+/rpi-cam/*.h264
