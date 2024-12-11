@@ -2,3 +2,8 @@
 /nginx/rpi-cam/live/
 /rpi-cam/*.jpg
 /rpi-cam/*.h264
+
+/streetview/images/*.png
+/streetview/*.gif
+/streetview/cache/*.gif
+/streetview/cache/*.json
