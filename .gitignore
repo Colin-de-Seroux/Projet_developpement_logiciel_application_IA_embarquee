@@ -3,6 +3,19 @@
 /rpi-cam/*.jpg
 /rpi-cam/*.h264
 
+# YOLO
+/yolo/yolo*
+/yolo/*.jpg
+/yolo/mymodel.onnx
+/yolo/onnxruntime_profile__*
+/yolo/model_optimised.onnx
+/yolo/calibration*
+
+# Data
+/data/Converted/
+/data/NonConverted/
+
+# Streeview
 /streetview/images/*.png
 /streetview/*.gif
 /streetview/cache/*.gif
