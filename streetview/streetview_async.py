@@ -51,7 +51,7 @@ async def capture_image(page, lat, lon, heading, output_file):
     """
     try:
         # Charger l'URL Street View
-        await page.goto(f'https://www.google.com/maps/@{lat},{lon},3a,75y,{heading}h,90t/data=!3m6!1e1!3m4!1s6TlniPdxCV98aICBlE0l0g!2e0!7i16384!8i8192?entry=ttu', timeout=30000)
+        await page.goto(f'https://www.google.com/maps/@{lat},{lon},3a,75y,{heading}h,90t/data=!3m6!1e1!3m4!1s6TlniPdxCV98aICBlE0l0g!2e0!7i16384!8i8192?entry=ttu', timeout=60000)
         
         # Attendre que le canvas Street View soit prêt
         canvas_selector = "canvas.widget-scene-canvas[height='720'][width='1280']"
@@ -60,7 +60,7 @@ async def capture_image(page, lat, lon, heading, output_file):
 
         # Capturer uniquement le canvas
         canvas = page.locator(canvas_selector).first
-        await canvas.screenshot(path=output_file)
+        await canvas.screenshot(path=output_file, timeout=60000)
         print(f"Image capturée : {output_file}")
     except Exception as e:
         print(f"Erreur lors de la capture de {lat}, {lon}, {heading} : {e}")
@@ -89,7 +89,7 @@ async def create_page_pool(browser, pool_size):
     for i in range(pool_size):
         page = await browser.new_page()
         try:
-            await page.goto("https://www.google.com/maps", timeout=30000)
+            await page.goto("https://www.google.com/maps", timeout=60000)
             await page.wait_for_selector('button[aria-label="Tout refuser"]')
             await page.click('button[aria-label="Tout refuser"]')
             print(f"Page {i+1} prête")
@@ -157,7 +157,41 @@ async def get_streetview_images_async(positions, output_folder, headless=True, m
 def get_streetview_images(positions, output_folder, headless=True, max_concurrent_tasks=5):
     asyncio.run(get_streetview_images_async(positions, output_folder, headless, max_concurrent_tasks))
 
+def create_gif(image_folder, output_file, duration=500):
+    """
+    Crée un GIF à partir des images dans un dossier donné.
+
+    :param image_folder: Chemin du dossier contenant les images.
+    :param output_file: Chemin du fichier GIF de sortie.
+    :param duration: Durée entre les images en millisecondes (par défaut 500ms).
+    """
+    # Récupérer tous les fichiers d'images dans le dossier
+    images = [
+        os.path.join(image_folder, f)
+        for f in sorted(os.listdir(image_folder))
+        if f.endswith(".png")
+    ]
+    
+    if not images:
+        raise ValueError("Aucune image trouvée dans le dossier spécifié.")
+
+    # Charger les images
+    frames = [Image.open(img) for img in images]
+
+    # Créer le GIF
+    frames[0].save(
+        output_file,
+        format="GIF",
+        append_images=frames[1:],
+        save_all=True,
+        duration=duration,
+        loop=0,  # Boucle infinie
+    )
+    print(f"GIF créé : {output_file}")
+
 if __name__ == "__main__":
     positions = get_coordinates_with_orientation()
     output_folder = "images"
-    get_streetview_images(positions, output_folder, headless=True, max_concurrent_tasks=20)
+    get_streetview_images(positions, output_folder, headless=True, max_concurrent_tasks=30)
+    
+    create_gif(output_folder, "streetview.gif", duration=500)

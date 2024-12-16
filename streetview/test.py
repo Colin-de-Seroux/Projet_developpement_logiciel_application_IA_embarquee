@@ -178,7 +178,7 @@ if __name__ == "__main__":
 
     # Appeler la fonction pour capturer les images
     output_folder = "./images"
-    get_streetview_images(positions, output_folder, headless=HEADLESS)
+    #get_streetview_images(positions, output_folder, headless=HEADLESS)
 
     # Créer le GIF à partir des images capturées
-    create_gif(output_folder, "streetview.gif", duration=100)
+    #create_gif(output_folder, "streetview.gif", duration=100)
