@@ -10,10 +10,10 @@
 /yolo/onnxruntime_profile__*
 /yolo/model_optimised.onnx
 /yolo/calibration*
+/yolo/runs/
 
 # Data
-/data/Converted/
-/data/NonConverted/
+/data/dataset1/
 
 # Streeview
 /streetview/images/*.png
