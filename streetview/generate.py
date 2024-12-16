@@ -109,6 +109,13 @@ def save_to_csv(coordinates, filename):
 start_coordinates = (43.657573, 7.128430)
 end_coordinates = (43.6282301,7.0357206)
 
+start_coordinates = (43.657557, 7.128448) # aller en ardèche
+end_coordinates = (44.632738, 4.253234)
+
+# Coordoonnées de départ et d'arrivée (route random, Alpes Maritimes)
+#start_coordinates = (43.651981, 7.127544)
+#end_coordinates = (43.642865,7.1248359)
+
 # Générer les coordonnées avec un pas de 10 mètres
 step_distance = 1  # mètres
 #result = generate_linear_coordinates(start_coordinates, end_coordinates, step_distance)
