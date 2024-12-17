@@ -24,4 +24,4 @@
 
 # rust
 /target/
-/Cargo.lock
+Cargo.lock

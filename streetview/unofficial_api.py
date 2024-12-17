@@ -5,7 +5,6 @@ import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 import io
-import pillow_avif
 
 def fetch_id(lat, lon):
     """
@@ -16,13 +15,13 @@ def fetch_id(lat, lon):
     id = response.text.split('"IMAGE_ALLEYCAT|')[1].split('"')[0]
     return id
 
-def fetch_image(lat, lon, heading, output_folder, i, fill, timeout=10):
+def fetch_image(lat, lon, heading, output_folder, i, fill, size, timeout=10):
     """
     Télécharge une image StreetView et l'enregistre dans le dossier de sortie.
     """
     try:
         id = fetch_id(lat, lon)
-        url = f"https://streetviewpixels-pa.googleapis.com/v1/thumbnail?cb_client=maps_sv.tactile&w=1800&h=1200&panoid={id}&yaw={heading}"
+        url = f"https://streetviewpixels-pa.googleapis.com/v1/thumbnail?cb_client=maps_sv.tactile&w={size[0]}&h={size[1]}&panoid={id}&yaw={heading}"
         response = requests.get(url, timeout=timeout)  # Timeout pour chaque téléchargement
 
         img = Image.open(io.BytesIO(response.content))
@@ -30,12 +29,10 @@ def fetch_image(lat, lon, heading, output_folder, i, fill, timeout=10):
 
         img.save(output_file)
         print(f"Image capturée : {output_file}")
-        return response.__sizeof__()
     except Exception as e:
         print(f"Erreur lors de la capture de {lat}, {lon}, {heading} : {e}")
-        return 0
 
-def fetch_images_parallel(positions, output_folder, max_workers=4):
+def fetch_images_parallel(positions, output_folder, max_workers=4, size=(1800, 1200)):
     """
     Télécharge les images Street View en parallèle.
     """
@@ -50,19 +47,24 @@ def fetch_images_parallel(positions, output_folder, max_workers=4):
     # Utilisation d'un pool de threads pour télécharger en parallèle
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = [
-            executor.submit(fetch_image, lat, lon, heading, output_folder, i, zfill)
+            executor.submit(fetch_image, lat, lon, heading, output_folder, i, zfill, size)
             for i, (lat, lon, heading) in enumerate(positions)
         ]
         
-        taille = 0
         # Gestion des futures avec délai
         for future in as_completed(futures):  # Timeout global
             try:
-                taille += future.result(timeout=30)  # Récupérer les résultats ou lever une exception
+                future.result(timeout=30)  # Récupérer les résultats ou lever une exception
             except Exception as e:
                 print(f"Erreur dans une tâche : {e}")
 
-    print(f"{len(positions)} images ({taille/1e9}Go) téléchargées en {time.time() - chrono:.2f} secondes")
+    taille = 0
+    for path, dirs, files in os.walk("./images"):
+        for f in files:
+            fp = os.path.join(path, f)
+            taille += os.path.getsize(fp)
+    
+    print(f"{len(positions)} images ({taille/1e9:.1f}Go) téléchargées en {time.time() - chrono:.2f} secondes")
 
 def calculate_orientations(coordinates):
     """
@@ -130,7 +132,7 @@ if __name__ == '__main__':
     output_folder = 'images'
     
     # Télécharger les images en parallèle
-    #fetch_images_parallel(positions, output_folder, max_workers=16)
+    fetch_images_parallel(positions, output_folder, max_workers=32, size=(450, 300))
     
     # Créer un GIF à partir des images téléchargées
-    create_gif(output_folder, 'output.gif')
+    #create_gif(output_folder, 'output.gif')

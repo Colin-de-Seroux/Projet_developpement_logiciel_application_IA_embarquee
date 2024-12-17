@@ -2,6 +2,7 @@ import asyncio
 from playwright.async_api import async_playwright
 import os
 import math
+from PIL import Image
 
 def calculate_orientations(coordinates):
     """
