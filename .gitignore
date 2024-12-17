@@ -20,3 +20,7 @@
 /streetview/*.gif
 /streetview/cache/*.gif
 /streetview/cache/*.json
+
+# rust in subfolder
+/target/
+Cargo.lock
