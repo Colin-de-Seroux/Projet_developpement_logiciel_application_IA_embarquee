@@ -14,6 +14,7 @@
 
 # Data
 /data/dataset1/
+/cache/*.json
 
 # Streeview
 /streetview/images/*.png
@@ -21,6 +22,6 @@
 /streetview/cache/*.gif
 /streetview/cache/*.json
 
-# rust in subfolder
+# rust
 /target/
-Cargo.lock
+/Cargo.lock
