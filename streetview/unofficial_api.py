@@ -5,6 +5,15 @@ import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 import io
+import matplotlib.pyplot as plt
+import base64
+from label_studio_sdk import Client
+
+LABEL_STUDIO_URL = "http://localhost:8080"  # URL de votre instance Label Studio
+API_KEY = "6c9a8f63aa6b3a258528dadb7bdafc1d7216de2a"  # Remplacez par votre clé d'API
+PROJECT_NAME = "Annotation Street View"
+OUTPUT_FOLDER = "images"
+
 
 def fetch_id(lat, lon):
     """
@@ -64,7 +73,9 @@ def fetch_images_parallel(positions, output_folder, max_workers=4, size=(1800, 1
             fp = os.path.join(path, f)
             taille += os.path.getsize(fp)
     
-    print(f"{len(positions)} images ({taille/1e9:.1f}Go) téléchargées en {time.time() - chrono:.2f} secondes")
+    total_time = time.time() - chrono
+    print(f"{len(positions)} images ({taille/1e9:.1f}Go) téléchargées en {total_time:.2f} secondes")
+    return total_time
 
 def calculate_orientations(coordinates):
     """
@@ -127,12 +138,52 @@ def create_gif(output_folder, output_file='output.gif'):
 
     print(f"GIF créé : {output_file}")
 
+def upload_to_label_studio(label_studio_url, api_key, project_name, image_paths):
+    print(f"Envoi des images à Label Studio ({len(image_paths)} images)...")
+    client = Client(url=label_studio_url, api_key=api_key)
+    project = next((p for p in client.get_projects() if p.title == project_name), None)
+    if not project:
+        project = client.start_project(
+            title=project_name,
+            label_config="""
+                <View>
+                    <Image name="image" value="$image" />
+                </View>
+            """,
+        )
+        print(f"Projet créé : {project_name}")
+    taille = len(image_paths)
+    for i, image_path in enumerate(image_paths):
+        with open(image_path, "rb") as image_file:
+            tasks = [{
+                "data": {"image": f"data:image/png;base64,{base64.b64encode(image_file.read()).decode('utf-8')}"},
+            }]
+        project.import_tasks(tasks)
+        print(f"Image {i+1}/{taille} envoyée à Label Studio")
+    print(f"Images envoyées à Label Studio")
+
 if __name__ == '__main__':
     positions = get_coordinates_with_orientation()
     output_folder = 'images'
+
+    fetch_images_parallel(positions, output_folder, max_workers=22, size=(640, 640))
+
+    upload_to_label_studio(LABEL_STUDIO_URL, API_KEY, PROJECT_NAME, [f"{output_folder}/{file}" for file in sorted(os.listdir(output_folder)) if file.endswith('.png')])
     
+    """
+    Lx = [i for i in range(1, 32)]
+    Ly = []
     # Télécharger les images en parallèle
-    fetch_images_parallel(positions, output_folder, max_workers=32, size=(450, 300))
+    for i in Lx:
+        Ly.append(len(positions)/fetch_images_parallel(positions, output_folder, max_workers=i, size=(640, 640)))
+    
+    plt.plot(Lx, Ly)
+    plt.xlabel('Nombre de threads')
+    plt.ylabel('Temps (s)')
+    plt.title('Temps de téléchargement en fonction du nombre de threads')
+    plt.show()
+    plt.savefig('temps_threads.png')
     
     # Créer un GIF à partir des images téléchargées
     #create_gif(output_folder, 'output.gif')
+"""
