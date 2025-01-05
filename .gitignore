@@ -14,6 +14,7 @@
 
 # Data
 /data/dataset1/
+/data/project-1/
 /cache/*.json
 
 # Streeview
