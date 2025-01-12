@@ -1,0 +1,108 @@
+{
+    "info": {
+        "year": 2002,
+        "version": "1.0",
+        "description": "",
+        "contributor": "Colin de Seroux",
+        "url": "https://colindeseroux.fr",
+        "date_created": "2002-05-18"
+    },
+    "images": [
+        {
+            "width": 640,
+            "height": 640,
+            "id": 18,
+            "file_name": "image.png"
+        },
+        {
+            "width": 640,
+            "height": 640,
+            "id": 36,
+            "file_name": "image1.png"
+        },
+        {
+            "width": 640,
+            "height": 640,
+            "id": 4,
+            "file_name": "image2.png"
+        },
+        {
+            "width": 640,
+            "height": 640,
+            "id": 99,
+            "file_name": "image3.png"
+        }
+    ],
+    "categories": [
+        {
+            "id": 0,
+            "name": "ocelot"
+        },
+        {
+            "id": 1,
+            "name": "lynx"
+        }
+    ],
+    "annotations": [
+        {
+            "id": 0,
+            "image_id": 18,
+            "category_id": 0,
+            "segmentation": [],
+            "bbox": [
+                2.677824267782428,
+                156.20641562064154,
+                413.27754532775447,
+                377.57322175732196
+            ],
+            "ignore": 0,
+            "iscrowd": 0,
+            "area": 156042.53426935792
+        },
+        {
+            "id": 1,
+            "image_id": 4,
+            "category_id": 1,
+            "segmentation": [],
+            "bbox": [
+                104.43514644351464,
+                34.81171548117155,
+                434.70013947001394,
+                591.7991631799163
+            ],
+            "ignore": 0,
+            "iscrowd": 0,
+            "area": 257255.17877254714
+        },
+        {
+            "id": 2,
+            "image_id": 4,
+            "category_id": 1,
+            "segmentation": [],
+            "bbox": [
+                104.43514644351464,
+                34.81171548117155,
+                434.70013947001394,
+                591.7991631799163
+            ],
+            "ignore": 0,
+            "iscrowd": 0,
+            "area": 257255.17877254714
+        },
+        {
+            "id": 3,
+            "image_id": 99,
+            "category_id": 1,
+            "segmentation": [],
+            "bbox": [
+                248.1450488145049,
+                181.19944211994417,
+                380.25104602510464,
+                245.46722454672243
+            ],
+            "ignore": 0,
+            "iscrowd": 0,
+            "area": 93339.16889877045
+        }
+    ]
+}

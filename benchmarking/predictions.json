@@ -1,0 +1,38 @@
+[
+    {
+        "image_id": 18,
+        "category_id": 0,
+        "bbox": [
+            2,
+            156,
+            413,
+            377
+        ],
+        "score": 0.9,
+        "inference_time": 0.248
+    },
+    {
+        "image_id": 99,
+        "category_id": 1,
+        "bbox": [
+            248,
+            181,
+            380,
+            245
+        ],
+        "score": 0.5,
+        "inference_time": 0.1
+    },
+    {
+        "image_id": 36,
+        "category_id": 1,
+        "bbox": [
+            20,
+            150,
+            606,
+            361
+        ],
+        "score": 0.5,
+        "inference_time": 0.1
+    }
+]

@@ -33,3 +33,4 @@ Cargo.lock
 
 # Vscode
 /.vscode/
+*/__pycache__/
