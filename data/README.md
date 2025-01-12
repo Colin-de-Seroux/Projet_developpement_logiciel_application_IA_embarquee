@@ -1,5 +1,11 @@
 # Pre-processing
 
-## Label-Studio
+## `<span style="color:lightblue">`Label-Studio
 
-[Installation](https://labelstud.io/guide/install.html)
+### `<span style="color:lightgreen">`Docker
+
+[Volume](https://drive.google.com/drive/folders/1lfZTfyBITK0RF8ZWTQt7y9NxC_q-sGEZ)
+
+```sh
+docker run -it -p 8080:8080 -v ${PWD}/mydata:/label-studio/data heartexlabs/label-studio:latest label-studio --log-level DEBUG
+```

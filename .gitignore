@@ -5,6 +5,7 @@
 
 # YOLO
 /yolo/yolo*
+/yolo/saved/
 /yolo/*.jpg
 /yolo/mymodel.onnx
 /yolo/onnxruntime_profile__*
@@ -14,6 +15,9 @@
 
 # Data
 /data/dataset1/
+/data/dataset2/
+/data/JSON2YOLO/
+/data/label-studio/
 /data/project-1/
 /cache/*.json
 
@@ -26,3 +30,6 @@
 # rust
 /target/
 Cargo.lock
+
+# Vscode
+/.vscode/
