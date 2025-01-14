@@ -207,3 +207,13 @@ hailomz optimize --hw-arch hailo8l --har ./yolov8n.har yolov8n
 ```sh
 hailomz compile yolov8n --hw-arch hailo8l --har ./yolov8n.har
 ```
+
+#### <span style="color:lightpink">Exemple concret sans faire d'optimisation personnalisé .onnx</span>
+
+```sh
+hailomz compile yolov8n --ckpt yolov8n_trained.onnx --hw-arch hailo8l --calib-path train/images --classes 7 --performance
+```
+
+## <span style="color:lightblue">Sources</span>
+
+[Le code pour lancer sur une image](https://github.com/hailo-ai/Hailo-Application-Code-Examples/tree/main/runtime/python/object_detection)
