@@ -70,69 +70,18 @@ def extract_predictions_from_file(annotations_file: str, predictions_file: str) 
     return y_pred, y_scores
 
 
-
-def evaluate_metrics(coco_eval: COCOeval) -> tuple:
-    """
-    Évalue les métriques de détection d'objets à partir d'un objet COCOeval.
-    
-    :param coco_eval: L'objet COCOeval à partir duquel extraire les métriques
-    
-    :return: Un tuple contenant la précision, le rappel, les scores et un dictionnaire de correspondance entre les seuils IoU et leur index
-    """
-     
-    iou_lookup = {float(format(val, ".2f")): index for index, val in enumerate(coco_eval.params.iouThrs)} 
-    
-    precision = coco_eval.eval["precision"]
-    recall = coco_eval.eval["recall"]
-    scores = coco_eval.eval["scores"]
-
-    return precision, recall, scores, iou_lookup
-
-
-def display_metrics(precision, recall, scores, iou_lookup, class_name) -> None:
-    """
-    Affiche les métriques de détection d'objets.
-    
-    :param precision: La précision
-    :param recall: Le rappel
-    :param scores: Les scores
-    :param iou_lookup: Un dictionnaire de correspondance entre les seuils IoU et leur index
-    :param class_name: Le nom de la classe
-    
-    :return: None
-    """
-       
-    if class_name:
-        print("\n|-------------------------------------------|")
-        print(f"| Class Name : {class_name}")
-    
-    print("|-------------------------------------------|")
-    print("| IoU | mAP | F1-Score | Precision | Recall |")
-    print("|-----|-----|----------|-----------|--------|")
-        
-    for iou in iou_lookup.keys():
-        precision_iou = precision[iou_lookup[iou], :, :, 0, -1].mean(1)
-        scores_iou = scores[iou_lookup[iou], :, :, 0, -1].mean(1)
-        recall_iou = recall[iou_lookup[iou], :, 0, -1]
-        prec = precision_iou.mean()
-        rec = recall_iou.mean()
-                
-        print("| {:.2f}|{:.2f}|      {:.2f}|       {:.2f}|    {:.2f}|".format(
-            iou, prec * 100, scores_iou.mean(), (2 * prec * rec / (prec + rec + 1e-8)), prec, rec 
-        ))
-
-
-def prepare_confusion_matrix(y_true, y_pred):
+def prepare_confusion_matrix(y_true, y_pred, class_names) -> tuple:
     """
     Prépare y_true_flat et y_pred_flat pour une matrice de confusion.
     
     :param y_true: Liste des catégories réelles pour chaque image (par image)
     :param y_pred: Liste des catégories prédites pour chaque image (par image)
+    :param class_names: Noms des classes
     
     :return: y_true_flat, y_pred_flat et all_classes
     """
     
-    all_classes = list(set(cls for sublist in y_true for cls in sublist) | set(cls for sublist in y_pred for cls in sublist))
+    all_classes = list(range(len(class_names)))
     all_classes.append(-1)
 
     y_true_flat = []
