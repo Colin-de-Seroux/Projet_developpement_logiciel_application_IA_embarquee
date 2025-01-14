@@ -4,21 +4,16 @@
 /rpi-cam/*.h264
 
 # YOLO
-/yolo/yolo*
 /yolo/saved/
 /yolo/*.jpg
-/yolo/mymodel.onnx
 /yolo/onnxruntime_profile__*
-/yolo/model_optimised.onnx
 /yolo/calibration*
 /yolo/runs/
 
 # Data
-/data/dataset1/
-/data/dataset2/
+/data/dataset*
 /data/JSON2YOLO/
 /data/label-studio/
-/data/project-1/
 /cache/*.json
 
 # Streeview
