@@ -217,3 +217,5 @@ hailomz compile yolov8n --ckpt yolov8n_trained.onnx --hw-arch hailo8l --calib-pa
 ## <span style="color:lightblue">Sources</span>
 
 [Le code pour lancer sur une image](https://github.com/hailo-ai/Hailo-Application-Code-Examples/tree/main/runtime/python/object_detection)
+[Le code pour lancer sur une vidéo](https://github.com/hailo-ai/hailo-rpi5-examples)
+[Pour optimiser en 16bits](https://github.com/hailo-ai/Hailo-Application-Code-Examples/blob/main/compilation/16bit_optimization/model-optimization-using-16bit.ipynb)
