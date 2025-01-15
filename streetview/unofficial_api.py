@@ -7,7 +7,7 @@ import time
 import io
 import matplotlib.pyplot as plt
 import base64
-from label_studio_sdk import Client
+#from label_studio_sdk import Client, Project
 
 LABEL_STUDIO_URL = "http://localhost:8080"  # URL de votre instance Label Studio
 API_KEY = "6c9a8f63aa6b3a258528dadb7bdafc1d7216de2a"  # Remplacez par votre clé d'API
@@ -165,11 +165,11 @@ def upload_to_label_studio(label_studio_url, api_key, project_name, image_paths)
 if __name__ == '__main__':
     positions = get_coordinates_with_orientation()
     output_folder = 'images'
-
+    """
     fetch_images_parallel(positions, output_folder, max_workers=22, size=(640, 640))
 
     upload_to_label_studio(LABEL_STUDIO_URL, API_KEY, PROJECT_NAME, [f"{output_folder}/{file}" for file in sorted(os.listdir(output_folder)) if file.endswith('.png')])
-    
+        
     """
     Lx = [i for i in range(1, 32)]
     Ly = []
@@ -186,4 +186,3 @@ if __name__ == '__main__':
     
     # Créer un GIF à partir des images téléchargées
     #create_gif(output_folder, 'output.gif')
-"""
