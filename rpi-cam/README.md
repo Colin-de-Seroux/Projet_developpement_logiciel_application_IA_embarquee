@@ -69,4 +69,5 @@ Dépendences python
 ```sh
 pip install groveGPS
 pip install paho-mqtt
+pip install osmnx
 ```
