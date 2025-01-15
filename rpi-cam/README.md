@@ -55,3 +55,18 @@ sudo apt install ffmpeg
 ```sh
 ffmpeg -i video.h264 -c:v copy video.mp4 -y | mpv video.mp4
 ```
+
+
+## Installation des dépendences
+
+MQTT : 
+```sh
+sudo apt-get update && sudo apt-get upgrade
+sudo apt install -y mosquitto mosquitto-clients
+```
+
+Dépendences python
+```sh
+pip install groveGPS
+pip install paho-mqtt
+```
