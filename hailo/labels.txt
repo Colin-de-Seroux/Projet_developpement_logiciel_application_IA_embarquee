@@ -1,0 +1,7 @@
+speed110
+speed130
+speed30
+speed50
+speed70
+speed80
+speed90
