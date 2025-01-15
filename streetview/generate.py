@@ -120,6 +120,10 @@ end_coordinates = (43.642865,7.1248359)
 start_coordinates = (43.642865,7.1248359)
 end_coordinates = (43.6281792,7.0356255)
 
+# coordonnées d'une route avec beaucoup de paneaux
+start_coordinates = (47.2819617,5.0086905) # dijon
+end_coordinates = (47.0436193,4.8492408) # beaune
+
 # Générer les coordonnées avec un pas de 10 mètres
 step_distance = 1  # mètres
 #result = generate_linear_coordinates(start_coordinates, end_coordinates, step_distance)

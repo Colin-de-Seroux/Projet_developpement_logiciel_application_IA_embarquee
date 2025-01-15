@@ -170,7 +170,7 @@ if __name__ == '__main__':
 
     upload_to_label_studio(LABEL_STUDIO_URL, API_KEY, PROJECT_NAME, [f"{output_folder}/{file}" for file in sorted(os.listdir(output_folder)) if file.endswith('.png')])
         
-    """
+    
     Lx = [i for i in range(1, 32)]
     Ly = []
     # Télécharger les images en parallèle
@@ -183,6 +183,8 @@ if __name__ == '__main__':
     plt.title('Temps de téléchargement en fonction du nombre de threads')
     plt.show()
     plt.savefig('temps_threads.png')
+    """
+    fetch_images_parallel(positions, output_folder, max_workers=22, size=(640, 640))
     
-    # Créer un GIF à partir des images téléchargées
-    #create_gif(output_folder, 'output.gif')
+# Créer un GIF à partir des images téléchargées
+    create_gif(output_folder, 'output.gif')
