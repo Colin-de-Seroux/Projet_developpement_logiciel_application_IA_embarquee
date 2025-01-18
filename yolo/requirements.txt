@@ -1,4 +1,3 @@
-matplotlib
 torch
 ultralytics
 ultralytics[export]

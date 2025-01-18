@@ -1,5 +1,6 @@
 from ultralytics import YOLO
 
+@DeprecationWarning
 def export_model(model_name: str = "yolov8n", format: str = "onnx", device : str = "cpu", image_size : int = 640) -> str:
     """
     Exportation du modèle YOLO dans un certain format.
