@@ -1,18 +1,18 @@
 # Utilisation de la caméra PI Module 2
 
-## Voir si la caméra est connectée
+## <span style="color:lightblue">Voir si la caméra est connectée</span>
 
 ```sh
 libcamera-hello --list-cameras
 ```
 
-## Prendre une photo
+## <span style="color:lightblue">Prendre une photo</span>
 
 ```sh
 libcamera-jpeg -o image.jpg
 ```
 
-## Pour faire un direct
+## <span style="color:lightblue">Pour faire un direct</span>
 
 Sur la raspberry pi :
 
@@ -20,7 +20,7 @@ Sur la raspberry pi :
 libcamera-vid -t 0 --inline --listen --nopreview -o tcp://0.0.0.0:8080
 ```
 
-### Soit sur la raspberry
+### <span style="color:lightgreen">Soit sur la raspberry</span>
 
 ```sh
 ffmpeg -i tcp://0.0.0.0:8080 -c:v libx264 -f hls -hls_time 2 -hls_list_size 10 -hls_segment_filename "/home/pi/nginx/rpi-cam/live/segment%03d.ts" /home/pi/nginx/rpi-cam/live/playlist.m3u8
@@ -28,25 +28,25 @@ ffmpeg -i tcp://0.0.0.0:8080 -c:v libx264 -f hls -hls_time 2 -hls_list_size 10 -
 
 L'affichage se fait sur _[raspberrypi.colindeseroux.fr:543](https://raspberrypi.colindeseroux.fr:543)_.
 
-### Soit sur votre machine
+### <span style="color:lightgreen">Soit sur votre machine</span>
 
 ```sh
 ffplay tcp://raspberrypi.colindeseroux.fr:544
 ```
 
-## Prendre une vidéo
+## <span style="color:lightblue">Prendre une vidéo</span>
 
 ```sh
 libcamera-vid -t 10000 -o video.h264 --rotation 180
 ```
 
-### Sur votre pc
+### <span style="color:lightgreen">Sur votre pc</span>
 
 ```sh
 scp pi@192.168.30.91:/home/pi/rpi-cam/video.h264 .
 ```
 
-#### Pour ubuntu
+#### <span style="color:lightpink">Pour ubuntu</span>
 
 ```sh
 sudo apt install ffmpeg
@@ -56,16 +56,17 @@ sudo apt install ffmpeg
 ffmpeg -i video.h264 -c:v copy video.mp4 -y | mpv video.mp4
 ```
 
+## <span style="color:lightblue">Installation des dépendences</span>
 
-## Installation des dépendences
+MQTT :
 
-MQTT : 
 ```sh
 sudo apt-get update && sudo apt-get upgrade
 sudo apt install -y mosquitto mosquitto-clients
 ```
 
 Dépendences python
+
 ```sh
 pip install groveGPS
 pip install paho-mqtt

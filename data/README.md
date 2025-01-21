@@ -1,8 +1,8 @@
 # Pre-processing
 
-## `<span style="color:lightblue">`Label-Studio
+## <span style="color:lightblue">Label-Studio</span>
 
-### `<span style="color:lightgreen">`Docker
+### <span style="color:lightgreen">Docker</span>
 
 [Volume](https://drive.google.com/drive/folders/1lfZTfyBITK0RF8ZWTQt7y9NxC_q-sGEZ)
 
