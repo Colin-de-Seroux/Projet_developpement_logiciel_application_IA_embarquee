@@ -31,7 +31,7 @@ class MQTTClient:
         logging.info(f"Message received: {msg.topic}")
 
         payload = json.loads(msg.payload)
-        image_id = payload["id"]
+        image_id = payload["timestamp"]
         image_data = base64.b64decode(payload["image"])
 
         image = Image.open(io.BytesIO(image_data))
@@ -39,7 +39,11 @@ class MQTTClient:
         self.predict(image_id, image)
 
     def predict(self, image_id, image):
-        results = self.model.predict(image)
+        logging.info(f"Predict: {image_id}")
+        
+        results = self.model.predict(image, device=0)
+
+        logging.info(f"Prédiction finie: {image_id}")
 
         inference_time = results[0].speed["inference"]
     
@@ -66,10 +70,10 @@ class MQTTClient:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    broker = "localhost"
+    broker = "192.168.137.58"
     port = 1883
-    subscrib = "/vroumvroum/images"
-    publish = "/vroumvroum/predictions"
+    subscrib = "inference/images"
+    publish = "inference/results"
     model_name = "yolo11n_trained.pt"
 
     client = MQTTClient(broker, port, subscrib, publish, model_name)
