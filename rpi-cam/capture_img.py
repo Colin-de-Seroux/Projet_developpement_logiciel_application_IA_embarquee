@@ -2,6 +2,7 @@ import time
 import io
 import base64
 import serial
+import json
 from math import radians, cos, sin, sqrt, atan2
 from picamera import PiCamera
 from datetime import datetime
@@ -15,7 +16,7 @@ mqtt_topic_results = "inference/results"
 gps_buffer = {}  # Buffer pour stocker les données GPS temporairement
 
 # Configuration caméra
-delay = 5  # Intervalle entre chaque capture (en secondes)
+delay = 0.2  # Intervalle entre chaque capture (en secondes)
 image_width = 640
 
 # MQTT Setup
@@ -61,7 +62,7 @@ def on_message(client, userdata, msg):
             }
             print(f"Données combinées : {combined_data}")
         else:
-            print(f"Résultat reçu mais aucune donnée GPS trouvée pour image_id={image_id}")
+            print(f"Résultat reçu mais aucune donnée GPS trouvée pour image_id={image_id}, {inference_result}")
     except Exception as e:
         print(f"Erreur lors de la réception des résultats : {e}")
 
@@ -109,13 +110,13 @@ def get_gps_data(gps_port):
             # print(line)
             if line.startswith("$GPGGA"):
                 data = line.split(',')
-                print(f"Raw Data: {data}")  # Affiche tout le message analysé
+                # print(f"Raw Data: {data}")  # Affiche tout le message analysé
                 if data[6] == "1":  # Fix valide
                     latitude_value = data[2]
                     latitude_direction = data[3]
                     longitude_value = data[4]
                     longitude_direction = data[5]
-                    print(f"Latitude: {latitude_value} {latitude_direction}, Longitude: {longitude_value} {longitude_direction}")
+                    # print(f"Latitude: {latitude_value} {latitude_direction}, Longitude: {longitude_value} {longitude_direction}")
                     latitude = convert_gps_coordinate(latitude_value, latitude_direction)
                     longitude = convert_gps_coordinate(longitude_value, longitude_direction)
                     t = datetime.now().strftime("%H%M%S.%f")
@@ -189,9 +190,9 @@ def main():
                 "timestamp": timestamp,
                 "image": image_base64
             }
-            client.publish(mqtt_topic_images, str(payload), qos=1, retain=True)
+            client.publish(mqtt_topic_images, json.dumps(payload), qos=1, retain=True)
 
-            print(f"Image envoyée avec timestamp={timestamp}. Données GPS stockées.")
+            # print(f"Image envoyée avec timestamp={timestamp}. Données GPS stockées.")
 
             # Attente avant la prochaine capture
             time.sleep(delay)
