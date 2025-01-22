@@ -22,5 +22,5 @@ To test the model on different hardware platforms:
 
 ### Benchmarking
 Benchmark the model's performance on various platforms:
-1. Open `benchmarking.ipynb`
+1. Open `../benchmarking/benchmarking-single.ipynb` and `../benchmarking/benchmarking-multiple.ipynb`
 2. change the model name and excute the code .
