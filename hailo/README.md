@@ -148,7 +148,7 @@ S'il y en a avec **_hailo_platform_**, [priez](https://hailo.ai/developer-zone/d
 hailo tutorial
 ```
 
-#### <span style="color:lightpink">Installation de jeux de données de vérification (optionnel)</span>
+#### <span style="color:lightpink">Installation de jeux de données de vérification (optionnel, uniquement si vous utilisez le jeu de donné coco2017)</span>
 
 ```sh
 cd ~/miniconda3/envs/hailo/lib/python3.9/site-packages
@@ -163,6 +163,8 @@ python hailo_model_zoo/datasets/create_coco_tfrecord.py calib2017
 ```
 
 Pour plus d'informations se référer à [docs/data](https://github.com/hailo-ai/hailo_model_zoo/blob/master/docs/DATA.rst).
+
+#### <span style="color:orange">Actuellement avec les versions que j'utilise les commandes d'optimisation .har ainsi que la quantification 16bits ne fonctionne pas sous wsl2.</span>
 
 #### <span style="color:lightpink">Parse</span>
 
@@ -208,7 +210,7 @@ hailomz optimize --hw-arch hailo8l --har ./yolov8n.har yolov8n
 hailomz compile yolov8n --hw-arch hailo8l --har ./yolov8n.har
 ```
 
-#### <span style="color:lightpink">Exemple concret sans faire d'optimisation personnalisé .onnx</span>
+#### <span style="color:lightpink">Exemple concret sans faire d'optimisation personnalisé en partant de notre fichier .onnx</span>
 
 ```sh
 hailomz compile yolov8n --ckpt yolov8n_trained.onnx --hw-arch hailo8l --calib-path train/images --classes 7 --performance
