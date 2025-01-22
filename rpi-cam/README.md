@@ -1,5 +1,19 @@
 # Utilisation de la caméra PI Module 2
 
+## <span style="color:lightblue">Activer l'I2C et le port série pour accéder à la caméra et au module GPS</span>
+Brancher la caméra sur le port CAMERA de la raspberry
+Brancher le module GPS sur le port UART du shield
+
+```sh
+sudo raspi-config
+```
+
+Activer "Interface Options -> I2C" et "Interface Options -> I2C" puis redémarrer
+
+```sh
+sudo reboot
+```
+
 ## <span style="color:lightblue">Voir si la caméra est connectée</span>
 
 ```sh
